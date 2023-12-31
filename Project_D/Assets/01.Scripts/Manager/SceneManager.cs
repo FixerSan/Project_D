@@ -64,7 +64,8 @@ public class SceneManager
                 AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync($"Scene_{sceneName}");
                 async.completed += (_) =>
                 {
-                    AddScene(sceneName,()=> { isLoading = false; loadCallback?.Invoke(); Managers.Screen.FadeOut(0.25f); });
+                    AddScene(sceneName,()=> { isLoading = false; loadCallback?.Invoke(); 
+                        Managers.Screen.FadeOut(0.25f); });
                 };
             });
         });
@@ -86,6 +87,9 @@ public class SceneManager
             //case Define.Scene.Stage:
             //    bs = SceneTrans.GetComponent<StageScene>();
             //    break;
+            case Define.Scene.Test:
+                bs = sceneTrans.GetComponent<TestScene>();
+                break;
 
             default:
                 _callback?.Invoke();
@@ -119,6 +123,10 @@ public class SceneManager
             //case Define.Scene.Stage:
             //    bs = SceneTrans.gameObject.AddComponent<StageScene>();
             //    break;
+
+            case Define.Scene.Test:
+                bs = SceneTrans.gameObject.AddComponent<TestScene>();
+                break;
 
             default:
                 _addSceneCallback?.Invoke();

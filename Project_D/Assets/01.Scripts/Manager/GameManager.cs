@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
             if (gameSettings.isDebuging)                                                            //µð¹ö±ë ÁßÀÏ ¶§
             {
                 Debug.Log("y");
+                Managers.Scene.LoadScene(gameSettings.startScene);
                 return;
             }
             //µð¹ö±ë ÁßÀÌ ¾Æ´Ò ¶§

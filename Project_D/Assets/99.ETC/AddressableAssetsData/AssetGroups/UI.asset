@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: UI
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: UI
   m_Data:
     m_SerializedData: []
-  m_GUID: 64c11dd34cca1fa468236e04da8dcfa9
+  m_GUID: 07fb3a2c556109c42a6f65a9edd2b2ea
   m_SerializeEntries:
-  - m_GUID: 747d2ff576d7ce241b525fa1d7ff2210
-    m_Address: Test_UIScene_Main.prefab
+  - m_GUID: bb0a6859b11c1674d9aab8d769dcf395
+    m_Address: BlackPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload
@@ -26,5 +26,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 3909b773da7e7b34fa5db52770212107, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 8427cf3330fb4f842b4f49c5c62d5594, type: 2}
-    - {fileID: 11400000, guid: 7dc17a4b07197aa4eb52241584faa2ef, type: 2}
+    - {fileID: 11400000, guid: fb9d982c7c428c84ab0756ccea0fcde4, type: 2}
+    - {fileID: 11400000, guid: 2766c080b7c17d040be40860f627dab3, type: 2}

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdd1b4b4772de0146985200af40f04d2, type: 3}
-  m_Name: GameSettingsProfile
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: UI_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  isDebuging: 1
-  startScene: 3
+  m_Group: {fileID: 11400000, guid: 90097a5933de738468894e9bd3e16833, type: 2}
+  m_StaticContent: 0

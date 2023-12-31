@@ -10,21 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Profile
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: Profile
   m_Data:
     m_SerializedData: []
-  m_GUID: 64c11dd34cca1fa468236e04da8dcfa9
+  m_GUID: 52f6cde84028b0d469c89aeaef9afa6d
   m_SerializeEntries:
-  - m_GUID: 747d2ff576d7ce241b525fa1d7ff2210
-    m_Address: Test_UIScene_Main.prefab
+  - m_GUID: efd2eec9d71d223479b7067f1b1b4ccb
+    m_Address: GameSettingsProfile
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3909b773da7e7b34fa5db52770212107, type: 2}
   m_SchemaSet:
-    m_Schemas:
-    - {fileID: 11400000, guid: 8427cf3330fb4f842b4f49c5c62d5594, type: 2}
-    - {fileID: 11400000, guid: 7dc17a4b07197aa4eb52241584faa2ef, type: 2}
+    m_Schemas: []

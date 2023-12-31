@@ -31,6 +31,7 @@ public class Managers : Singleton<Managers>
         Instance.pool = new PoolManager();
         Instance.ui = new UIManager();
         Instance.screen = new ScreenManager();
+        Instance.scene = new SceneManager();
 
         Instance.routine = CoroutineManager.Instance;
         Instance.game = GameManager.Instance;

@@ -50,7 +50,7 @@ public class Define
 
     public enum Scene
     {
-        Login, Main, Stage
+        Login, Main, Stage, Test
     }
 
     public enum SoundType
