@@ -7,7 +7,7 @@ public class TestScene : BaseScene
 {
     public override void Init(Action _callback)
     {
-        Managers.UI.ShowSceneUI<Test_UIScene_Main>();
+        Managers.UI.ShowSceneUI<UIScene_Main>();
         _callback?.Invoke();
     }
 

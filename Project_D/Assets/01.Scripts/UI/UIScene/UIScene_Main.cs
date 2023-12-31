@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Test_UIScene_Main : UIScene
+public class UIScene_Main : UIScene
 {
 
 }

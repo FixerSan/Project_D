@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 64c11dd34cca1fa468236e04da8dcfa9
-  m_SerializeEntries:
-  - m_GUID: 747d2ff576d7ce241b525fa1d7ff2210
-    m_Address: Test_UIScene_Main.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Preload
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3909b773da7e7b34fa5db52770212107, type: 2}
   m_SchemaSet:

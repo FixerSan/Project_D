@@ -76,13 +76,13 @@ public class SceneManager
         BaseScene bs = null;
         switch (_scene)
         {
-            //case Define.Scene.Login:
-            //    bs = SceneTrans.GetComponent<LoginScene>();
-            //    break;
+            case Define.Scene.Login:
+                bs = SceneTrans.GetComponent<LoginScene>();
+                break;
 
-            //case Define.Scene.Main:
-            //    bs = SceneTrans.GetComponent<MainScene>();
-            //    break;
+            case Define.Scene.Main:
+                bs = SceneTrans.GetComponent<MainScene>();
+                break;
 
             //case Define.Scene.Stage:
             //    bs = SceneTrans.GetComponent<StageScene>();
@@ -112,13 +112,13 @@ public class SceneManager
         //Managers.Data.LoadSceneData(addScene);
         switch (addScene)
         {
-            //case Define.Scene.Login:
-            //    bs = SceneTrans.gameObject.AddComponent<LoginScene>();
-            //    break;
+            case Define.Scene.Login:
+                bs = SceneTrans.gameObject.AddComponent<LoginScene>();
+                break;
 
-            //case Define.Scene.Main:
-            //    bs = SceneTrans.gameObject.AddComponent<MainScene>();
-            //    break;
+            case Define.Scene.Main:
+                bs = SceneTrans.gameObject.AddComponent<MainScene>();
+                break;
 
             //case Define.Scene.Stage:
             //    bs = SceneTrans.gameObject.AddComponent<StageScene>();

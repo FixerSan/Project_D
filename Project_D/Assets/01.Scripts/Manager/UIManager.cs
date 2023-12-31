@@ -69,7 +69,6 @@ public class UIManager
         GameObject go = GameObject.Find("EventSystem");
         if (go == null) SetEventSystem();
         Canvas canvas = _go.GetOrAddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.worldCamera = Camera.main;
         canvas.overrideSorting = true;
 

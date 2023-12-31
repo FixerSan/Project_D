@@ -27,4 +27,12 @@ public class GameManager : Singleton<GameManager>
             Debug.Log("n");
         });
     }
+
+    public void Login()
+    {
+        Server.Instance.Login(() => 
+        {
+            Managers.Scene.LoadScene(Define.Scene.Main);
+        });
+    }
 }
