@@ -6,7 +6,7 @@ public class MonsterController : Actor
 {
     public Monster monster;
 
-    public override void Init()
+    public void Init()
     {
 
     }

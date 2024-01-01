@@ -10,6 +10,11 @@ public class Define
         Right = 1
     }
 
+    public enum PlayerState
+    {
+        Idle, Move, Attack, SkillCast, Die
+    }
+
     public enum Enemy
     {
 
