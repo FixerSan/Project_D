@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: f18f8e255a475f54ea48b34f0a2b363c
   m_SerializeEntries:
   - m_GUID: 17ed7a3f831c6c84aa0f34957f8143c3
-    m_Address: Player.prefab
+    m_Address: PlayerCharacter_0.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

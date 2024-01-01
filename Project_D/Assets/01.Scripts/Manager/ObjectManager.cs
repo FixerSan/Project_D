@@ -4,31 +4,68 @@ using UnityEngine;
 
 public class ObjectManager 
 {
-    public PlayerController Controller { get { return controller; } }
-    private PlayerController controller;
+    public PlayerController PlayerController { get { return playerController; } }
+    private PlayerController playerController;
 
+    public Transform PlayerControllerTrans 
+    {
+        get 
+        {
+            if(playerControllerTrans == null)
+            {
+                GameObject go = GameObject.Find("@PlayerControllerTrans");
+                if(go == null)
+                    go = new GameObject(name: "@PlayerControllerTrans");
+                playerControllerTrans = go.transform;
+            }
+            return playerControllerTrans;
+        }
+    }
+    public Transform playerControllerTrans;
+
+
+    public List<MonsterController> monsters = new List<MonsterController>();
 
     public void SpawnPlayer(int _playerCharacterIndex, Vector3 _playerPos)
     {
-        Player player = new Player(new PlayerData(), controller, new Status());
+        playerController = Managers.Resource.Instantiate($"PlayerCharacter_{_playerCharacterIndex}").GetOrAddComponent<PlayerController>();
+        Player player = new Player(new PlayerData(), playerController, new Status());
         Dictionary<Define.PlayerState, State<PlayerController>> states = new Dictionary<Define.PlayerState, State<PlayerController>>();
         states.Add(Define.PlayerState.Idle, new PlayerStates.Idle());
         states.Add(Define.PlayerState.Move, new PlayerStates.Move());
         states.Add(Define.PlayerState.Attack, new PlayerStates.Attack());
         states.Add(Define.PlayerState.SkillCast, new PlayerStates.SkillCast());
         states.Add(Define.PlayerState.Die, new PlayerStates.Die());
-        switch (_playerCharacterIndex)
+        playerController.SetPosition(_playerPos);
+        playerController.Init(player, states);
+    }
+
+    public void SpawnMonster(int _monsterIndex, Vector3 _monsterPos)
+    {
+        MonsterController monster = Managers.Resource.Instantiate($"Monster_{_monsterIndex}").GetOrAddComponent<MonsterController>();
+        monsters.Add(monster);
+    }
+
+    public void ClearPlayer()
+    {
+        Managers.Resource.Destroy(playerController.gameObject);
+        playerController = null;
+    }
+
+    public void ClearMonster(MonsterController _monster)
+    {
+        if(monsters.Contains(_monster))
         {
-            case 0:
-                controller = Managers.Resource.Instantiate("Player").GetOrAddComponent<PlayerController>();
-                break;
+            monsters.Remove(_monster);
+            Managers.Resource.Destroy(_monster.gameObject);
+        }    
+    }
 
-            default:
-                controller = Managers.Resource.Instantiate("Player").GetOrAddComponent<PlayerController>();
-                break;
-        }
+    public void ClearAllMonster()
+    {
+        for (int i = 0; i < monsters.Count; i++)
+            Managers.Resource.Destroy(monsters[i].gameObject);
 
-        controller.SetPosition(_playerPos);
-        controller.Init(player, states);
+        monsters.Clear(); 
     }
 }
