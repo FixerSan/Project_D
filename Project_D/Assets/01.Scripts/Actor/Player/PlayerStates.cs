@@ -1,23 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace PlayerStates
 {
     public class Idle : State<PlayerController>
     {
         public override void Enter(PlayerController _entity)
         {
-            Debug.Log("Idle 들어옴");
+
         }
         public override void Update(PlayerController _entity)
         {
-            Debug.Log("Idle 업데이트");
 
         }
         public override void Exit(PlayerController _entity)
         {
-            Debug.Log("Idle 나감");
 
         }
     }
@@ -25,17 +19,14 @@ namespace PlayerStates
     {
         public override void Enter(PlayerController _entity)
         {
-            Debug.Log("Move 들어옴");
 
         }
         public override void Update(PlayerController _entity)
         {
-            Debug.Log("Move 업데이트");
 
         }
         public override void Exit(PlayerController _entity)
         {
-            Debug.Log("Move 나감");
 
         }
     }

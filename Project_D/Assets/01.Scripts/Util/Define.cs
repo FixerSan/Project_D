@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Define 
+public class Define
 {
     public enum Direction
     {
@@ -20,9 +16,9 @@ public class Define
 
     }
 
-    public enum EnemyState
+    public enum MonsterState
     {
-        Stay, Idle, Move, Follow, Attack, SkillCast, Die, EndBattle
+        Create, Idle, Move, Follow, Attack, SkillCast, Die
     }
 
 

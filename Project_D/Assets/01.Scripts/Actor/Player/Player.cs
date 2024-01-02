@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player
@@ -17,15 +15,18 @@ public class Player
 
     public void CheckMove()
     {
-        if(Managers.Input.joystickInputValue != Vector2.zero)
+        if (Managers.Input.joystickInputValue != Vector2.zero)
         {
-            Move(Managers.Input.joystickInputValue * status.CurrentSpeed * Time.deltaTime);
+            Move(Managers.Input.joystickInputValue);
+            return;
         }
+
+        Stop();
     }
 
-    public void Move(Vector2 _moveValue)
+    public void Move(Vector2 _moveDir)
     {
-        controller.rb.velocity = _moveValue;
+        controller.rb.velocity = _moveDir * status.CurrentSpeed * Time.fixedDeltaTime;
     }
 
     public void Stop()

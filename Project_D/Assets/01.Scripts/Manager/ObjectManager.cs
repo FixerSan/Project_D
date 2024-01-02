@@ -1,20 +1,20 @@
-using System.Collections;
+using Monsters;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectManager 
+public class ObjectManager
 {
     public PlayerController PlayerController { get { return playerController; } }
     private PlayerController playerController;
 
-    public Transform PlayerControllerTrans 
+    public Transform PlayerControllerTrans
     {
-        get 
+        get
         {
-            if(playerControllerTrans == null)
+            if (playerControllerTrans == null)
             {
                 GameObject go = GameObject.Find("@PlayerControllerTrans");
-                if(go == null)
+                if (go == null)
                     go = new GameObject(name: "@PlayerControllerTrans");
                 playerControllerTrans = go.transform;
             }
@@ -22,7 +22,6 @@ public class ObjectManager
         }
     }
     public Transform playerControllerTrans;
-
 
     public List<MonsterController> monsters = new List<MonsterController>();
 
@@ -42,8 +41,37 @@ public class ObjectManager
 
     public void SpawnMonster(int _monsterIndex, Vector3 _monsterPos)
     {
-        MonsterController monster = Managers.Resource.Instantiate($"Monster_{_monsterIndex}").GetOrAddComponent<MonsterController>();
-        monsters.Add(monster);
+        MonsterController controller = Managers.Resource.Instantiate($"Monster_{_monsterIndex}").GetOrAddComponent<MonsterController>();
+        BaseMonster monster = null;
+        Dictionary<Define.MonsterState, State<MonsterController>> states = new Dictionary<Define.MonsterState, State<MonsterController>>();
+
+        switch (_monsterIndex)
+        {
+            case 0:
+                monster = new BaseMonster(new MonsterData(), controller, new Status());
+                states.Add(Define.MonsterState.Create, new MonsterStates.Base.Create());
+                states.Add(Define.MonsterState.Idle, new MonsterStates.Base.Idle());
+                states.Add(Define.MonsterState.Move, new MonsterStates.Base.Move());
+                states.Add(Define.MonsterState.Follow, new MonsterStates.Base.Follow());
+                states.Add(Define.MonsterState.Attack, new MonsterStates.Base.Attack());
+                states.Add(Define.MonsterState.SkillCast, new MonsterStates.Base.SkillCast());
+                states.Add(Define.MonsterState.Die, new MonsterStates.Base.Die());
+                break;
+
+            default:
+                monster = new BaseMonster(new MonsterData(), controller, new Status());
+                states.Add(Define.MonsterState.Create, new MonsterStates.Base.Create());
+                states.Add(Define.MonsterState.Idle, new MonsterStates.Base.Create());
+                states.Add(Define.MonsterState.Move, new MonsterStates.Base.Move());
+                states.Add(Define.MonsterState.Follow, new MonsterStates.Base.Follow());
+                states.Add(Define.MonsterState.Attack, new MonsterStates.Base.Attack());
+                states.Add(Define.MonsterState.SkillCast, new MonsterStates.Base.SkillCast());
+                states.Add(Define.MonsterState.Die, new MonsterStates.Base.Die());
+                break;
+        }
+        controller.SetPosition(_monsterPos);
+        controller.Init(monster, states);
+        monsters.Add(controller);
     }
 
     public void ClearPlayer()
@@ -54,11 +82,11 @@ public class ObjectManager
 
     public void ClearMonster(MonsterController _monster)
     {
-        if(monsters.Contains(_monster))
+        if (monsters.Contains(_monster))
         {
             monsters.Remove(_monster);
             Managers.Resource.Destroy(_monster.gameObject);
-        }    
+        }
     }
 
     public void ClearAllMonster()
@@ -66,6 +94,6 @@ public class ObjectManager
         for (int i = 0; i < monsters.Count; i++)
             Managers.Resource.Destroy(monsters[i].gameObject);
 
-        monsters.Clear(); 
+        monsters.Clear();
     }
 }

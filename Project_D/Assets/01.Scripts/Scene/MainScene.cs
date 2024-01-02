@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScene : BaseScene
@@ -9,6 +7,7 @@ public class MainScene : BaseScene
     {
         Managers.UI.ShowSceneUI<UIScene_Main>();
         Managers.Object.SpawnPlayer(0, Vector3.zero);
+        Managers.Object.SpawnMonster(0, new Vector3(0, 3, 0));
         _callback?.Invoke();
     }
     public override void Clear()

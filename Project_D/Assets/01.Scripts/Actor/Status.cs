@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Status
 {
     public float defaultHP;
@@ -11,4 +7,9 @@ public class Status
     public float defaultSpeed;
     public float plusSpeed;
     public float CurrentSpeed { get { return defaultSpeed + plusSpeed; } }
+
+    public Status()
+    {
+        defaultSpeed = 10;
+    }
 }

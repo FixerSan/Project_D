@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using DG.Tweening;
-using UnityEngine.Rendering;
+using UnityEngine.UI;
 
-public class UIManager 
+public class UIManager
 {
     private int order = 10;                                     // 그려지는 순서 여유 선언
     private int toastOrder = 500;                               // 인스턴트 메세지 그려지는 여유 선언
@@ -28,7 +25,7 @@ public class UIManager
             if (blackPanel == null)
             {
                 GameObject go = GameObject.Find("@BlackPanel");
-                if(go == null)
+                if (go == null)
                 {
                     go = Managers.Resource.Instantiate("BlackPanel");
                     go.name = "@BlackPanel";
@@ -52,7 +49,7 @@ public class UIManager
             }
             return root;
         }
-    }                                   
+    }
 
 
 
@@ -97,13 +94,13 @@ public class UIManager
     // SceneUI 생성
     public T ShowSceneUI<T>(string _name = null) where T : UIScene
     {
-        if(string.IsNullOrEmpty(_name))
+        if (string.IsNullOrEmpty(_name))
         {
             _name = typeof(T).Name;
         }
 
         GameObject go = Managers.Resource.Instantiate($"{_name}");
-        
+
         T _sceneUI = go.GetOrAddComponent<T>();
         sceneUI = _sceneUI;
 
@@ -125,7 +122,7 @@ public class UIManager
             _name = typeof(T).Name;
         }
 
-        GameObject go = Managers.Resource.Instantiate($"{_name}",_pooling:_pooling);
+        GameObject go = Managers.Resource.Instantiate($"{_name}", _pooling: _pooling);
         if (_pooling) Managers.Pool.CreatePool(go);
         T popup = go.GetOrAddComponent<T>();
         popupStack.Push(popup);
@@ -141,13 +138,13 @@ public class UIManager
         if (popupStack.Count == 0)
             return;
 
-        if(popupStack.Peek() != _popup)
+        if (popupStack.Peek() != _popup)
         {
             Debug.Log("Close Popup Failed");
             return;
         }
 
-        ClosePopupUI(); 
+        ClosePopupUI();
     }
 
     // 팝업 삭제 기능
@@ -157,7 +154,7 @@ public class UIManager
             return;
 
         UIPopup popup = popupStack.Pop();
-        if(activePopups.ContainsKey(Util.ParseEnum<Define.UIType>(popup.GetType().Name)))
+        if (activePopups.ContainsKey(Util.ParseEnum<Define.UIType>(popup.GetType().Name)))
             activePopups.Remove(Util.ParseEnum<Define.UIType>(popup.GetType().Name));
         Managers.Resource.Destroy(popup.gameObject);
         popup = null;
@@ -188,7 +185,7 @@ public class UIManager
     // 인스턴트 메세지 삭제 기능
     public void CloseToastUI()
     {
-        if(toastQueue.Count == 0)
+        if (toastQueue.Count == 0)
         {
             return;
         }
@@ -220,7 +217,7 @@ public class UIManager
     public void Clear()
     {
         CloseAllPopupUI();
-        
+
         Time.timeScale = 1;
         sceneUI = null;
     }

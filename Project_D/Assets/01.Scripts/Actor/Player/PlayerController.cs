@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : Actor
@@ -9,6 +8,7 @@ public class PlayerController : Actor
     private StateMachine<PlayerController> fsm;
     private Dictionary<Define.PlayerState, State<PlayerController>> states;
     private Define.PlayerState currentState;
+    private Dictionary<IEnumerator, Coroutine> routines = new Dictionary<IEnumerator, Coroutine>();
 
     public Define.PlayerState changeState;
     public Rigidbody2D rb;
@@ -21,7 +21,7 @@ public class PlayerController : Actor
         states = _states;
 
         fsm = new StateMachine<PlayerController>(this, states[Define.PlayerState.Idle]);
-        rb = GetComponent<Rigidbody2D>();
+        rb = gameObject.GetOrAddComponent<Rigidbody2D>();
         init = true;
     }
 
@@ -35,13 +35,14 @@ public class PlayerController : Actor
 
     public void ChangeState(Define.PlayerState _nextState, bool _isCanChangeSameState = false)
     {
-        if (currentState == _nextState) 
+        if (currentState == _nextState)
         {
             if (_isCanChangeSameState)
                 fsm.ChangeState(states[_nextState]);
             return;
         }
         currentState = _nextState;
+        changeState = _nextState;
         fsm.ChangeState(states[_nextState]);
     }
 
@@ -49,5 +50,16 @@ public class PlayerController : Actor
     {
         if (currentState != changeState)
             ChangeState(changeState);
+    }
+
+    public new void StartCoroutine(IEnumerator _routine)
+    {
+        routines.Add(_routine, base.StartCoroutine(_routine));
+    }
+
+    public new void StopCoroutine(IEnumerator _routine)
+    {
+        base.StopCoroutine(routines[_routine]);
+        routines.Remove(_routine);
     }
 }
