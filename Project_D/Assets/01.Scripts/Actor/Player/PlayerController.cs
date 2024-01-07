@@ -12,8 +12,13 @@ public class PlayerController : Actor
 
     public Define.PlayerState changeState;
     public Rigidbody2D rb;
+    public Animator anim;
+    public Dictionary<Define.PlayerState, int> animationHashs = new Dictionary<Define.PlayerState, int>();
 
     private bool init = false;
+
+
+    private Vector3 tempVecter = Vector3.zero;
 
     public void Init(Player _player, Dictionary<Define.PlayerState, State<PlayerController>> _states)
     {
@@ -22,6 +27,11 @@ public class PlayerController : Actor
 
         fsm = new StateMachine<PlayerController>(this, states[Define.PlayerState.Idle]);
         rb = gameObject.GetOrAddComponent<Rigidbody2D>();
+        animationHashs.Clear();
+        animationHashs.Add(Define.PlayerState.Idle, Animator.StringToHash("0_idle"));
+        animationHashs.Add(Define.PlayerState.Move, Animator.StringToHash("1_Run"));
+        anim = Util.FindChild<Animator>(gameObject, "Sprite", true);
+
         init = true;
     }
 
@@ -43,6 +53,7 @@ public class PlayerController : Actor
         }
         currentState = _nextState;
         changeState = _nextState;
+        anim.Play(animationHashs[_nextState]);
         fsm.ChangeState(states[_nextState]);
     }
 
@@ -50,6 +61,14 @@ public class PlayerController : Actor
     {
         if (currentState != changeState)
             ChangeState(changeState);
+    }
+
+    public void ChangeDirection(Define.Direction _direction)
+    {
+        if (_direction == Define.Direction.Left) tempVecter.y = 180;
+        if (_direction == Define.Direction.Right) tempVecter.y = 0;
+        
+        transform.eulerAngles = tempVecter;
     }
 
     public new void StartCoroutine(IEnumerator _routine)

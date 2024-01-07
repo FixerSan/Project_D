@@ -13,20 +13,33 @@ public class Player
         status = _status;
     }
 
-    public void CheckMove()
+    public bool CheckMove()
     {
         if (Managers.Input.joystickInputValue != Vector2.zero)
         {
-            Move(Managers.Input.joystickInputValue);
-            return;
+            controller.ChangeState(Define.PlayerState.Move);
+            return true;
         }
+        return false;
+    }
 
-        Stop();
+    public bool CheckStop()
+    {
+        if(Managers.Input.joystickInputValue == Vector2.zero)
+        {
+            controller.ChangeState(Define.PlayerState.Idle);
+            Stop();
+            return true;
+        }
+        return false;
     }
 
     public void Move(Vector2 _moveDir)
     {
-        controller.rb.velocity = _moveDir * status.CurrentSpeed * Time.fixedDeltaTime;
+        if (_moveDir.x > 0) controller.ChangeDirection(Define.Direction.Left);
+        if (_moveDir.x < 0) controller.ChangeDirection(Define.Direction.Right);
+
+        controller.rb.velocity = _moveDir * status.CurrentSpeed * 10 * Time.fixedDeltaTime;
     }
 
     public void Stop()

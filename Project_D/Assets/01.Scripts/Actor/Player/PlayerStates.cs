@@ -1,3 +1,5 @@
+using UnityEngine.Rendering.Universal;
+
 namespace PlayerStates
 {
     public class Idle : State<PlayerController>
@@ -8,7 +10,7 @@ namespace PlayerStates
         }
         public override void Update(PlayerController _entity)
         {
-
+            if (_entity.player.CheckMove()) return;
         }
         public override void Exit(PlayerController _entity)
         {
@@ -23,11 +25,12 @@ namespace PlayerStates
         }
         public override void Update(PlayerController _entity)
         {
-
+            if (_entity.player.CheckStop()) return;
+            _entity.player.Move(Managers.Input.joystickInputValue);
         }
         public override void Exit(PlayerController _entity)
         {
-
+            
         }
     }
     public class Attack : State<PlayerController>
