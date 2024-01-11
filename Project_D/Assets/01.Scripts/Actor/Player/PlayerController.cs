@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerController : Actor
@@ -8,37 +9,43 @@ public class PlayerController : Actor
     private StateMachine<PlayerController> fsm;
     private Dictionary<Define.PlayerState, State<PlayerController>> states;
     private Define.PlayerState currentState;
-    private Dictionary<IEnumerator, Coroutine> routines = new Dictionary<IEnumerator, Coroutine>();
+    public Dictionary<Define.PlayerState, int> animationHashs = new Dictionary<Define.PlayerState, int>();
 
     public Define.PlayerState changeState;
     public Rigidbody2D rb;
     public Animator anim;
-    public Dictionary<Define.PlayerState, int> animationHashs = new Dictionary<Define.PlayerState, int>();
 
+    public bool isDead = false;
     private bool init = false;
 
-
-    private Vector3 tempVecter = Vector3.zero;
-
-    public void Init(Player _player, Dictionary<Define.PlayerState, State<PlayerController>> _states)
+    public void Init(Player _player, Dictionary<Define.PlayerState, State<PlayerController>> _states, Status _status)
     {
         player = _player;
         states = _states;
+        status = _status;
 
         fsm = new StateMachine<PlayerController>(this, states[Define.PlayerState.Idle]);
         rb = gameObject.GetOrAddComponent<Rigidbody2D>();
         animationHashs.Clear();
         animationHashs.Add(Define.PlayerState.Idle, Animator.StringToHash("0_idle"));
         animationHashs.Add(Define.PlayerState.Move, Animator.StringToHash("1_Run"));
+        animationHashs.Add(Define.PlayerState.Attack, Animator.StringToHash("2_Attack_Normal"));
+        animationHashs.Add(Define.PlayerState.Die, Animator.StringToHash("4_Death")); 
+
         anim = Util.FindChild<Animator>(gameObject, "Sprite", true);
 
+        isDead = false;
         init = true;
+
+        player.FindAttackTarget();
     }
 
     public void Update()
     {
         if (!init) return;
-        player.CheckMove();
+        if (isDead) return;
+        if (player.CheckDie())
+            return;
         fsm.Update();
         CheckChangeStateInIspector();
     }
@@ -62,23 +69,13 @@ public class PlayerController : Actor
         if (currentState != changeState)
             ChangeState(changeState);
     }
-
-    public void ChangeDirection(Define.Direction _direction)
+    public override void Hit(float _damage)
     {
-        if (_direction == Define.Direction.Left) tempVecter.y = 180;
-        if (_direction == Define.Direction.Right) tempVecter.y = 0;
-        
-        transform.eulerAngles = tempVecter;
+        GetDamage(_damage);
     }
 
-    public new void StartCoroutine(IEnumerator _routine)
+    public override void GetDamage(float _damage)
     {
-        routines.Add(_routine, base.StartCoroutine(_routine));
-    }
-
-    public new void StopCoroutine(IEnumerator _routine)
-    {
-        base.StopCoroutine(routines[_routine]);
-        routines.Remove(_routine);
+        status.currentNowHP -= _damage;
     }
 }

@@ -9,6 +9,7 @@ public class Managers : Singleton<Managers>
     private SceneManager scene;
     private InputManager input;
     private ObjectManager _object;
+    private BattleManager battle;
 
     private CoroutineManager routine;
     private GameManager game;
@@ -20,6 +21,7 @@ public class Managers : Singleton<Managers>
     public static SceneManager Scene { get { return Instance?.scene; } }
     public static InputManager Input { get { return Instance?.input; } }
     public static ObjectManager Object { get { return Instance?._object; } }
+    public static BattleManager Battle { get { return Instance?.battle; } }
 
     public static CoroutineManager Routine { get { return Instance?.routine; } }
     public static GameManager Game { get { return Instance?.game; } }
@@ -35,6 +37,7 @@ public class Managers : Singleton<Managers>
         Instance.scene = new SceneManager();
         Instance.input = new InputManager();
         Instance._object = new ObjectManager();
+        Instance.battle = new BattleManager();
 
         Instance.routine = CoroutineManager.Instance;
         Instance.game = GameManager.Instance;

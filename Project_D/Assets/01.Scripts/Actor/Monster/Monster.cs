@@ -1,11 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 public class Monster
 {
     public MonsterData data;
     public MonsterController controller;
-    public Status status;
 
     public Actor attackTarget;
 
@@ -27,14 +27,12 @@ public class Monster
         controller.ChangeState(Define.MonsterState.Idle);
     }
 
-    public void CheckMove()
-    {
-
-    }
-
     public void Move(Vector2 _moveDir)
     {
-        controller.rb.velocity = _moveDir * status.CurrentSpeed * Time.fixedDeltaTime;
+        if (_moveDir.x > 0) controller.ChangeDirection(Define.Direction.Left);
+        if (_moveDir.x < 0) controller.ChangeDirection(Define.Direction.Right);
+
+        controller.rb.velocity = _moveDir * controller.status.CurrentSpeed * 5 * Time.fixedDeltaTime;
     }
 
     public void Stop()
@@ -42,7 +40,7 @@ public class Monster
         controller.rb.velocity = Vector2.zero;
     }
 
-    public void SetAttackTarget(PlayerController _attackTarget)
+    public void SetAttackTarget(Actor _attackTarget)
     {
         attackTarget = _attackTarget;
     }
@@ -87,7 +85,7 @@ public class Monster
                 tempActor = tempColliders[i].GetComponent<PlayerController>();
                 if (tempActor != null)
                 {
-                    attackTarget = tempActor;
+                    SetAttackTarget(tempActor);
                     break;
                 }
             }
@@ -95,12 +93,12 @@ public class Monster
 
             for (int i = 0; i < tempColliders.Length; i++)
             {
-                tempActor = tempColliders[i].GetComponent<MenberController>();
+                tempActor = tempColliders[i].GetComponent<MemberController>();
                 if (tempActor != null)
                 {
                     if (attackTarget == null)
                     {
-                        attackTarget = tempActor;
+                        SetAttackTarget(tempActor);
                         continue;
                     }
 
@@ -111,17 +109,64 @@ public class Monster
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+    public virtual bool CheckAttack()
+    {
+        if (attackTarget == null) return false;
+        if(Vector2.Distance(controller.transform.position, attackTarget.transform.position) < data.attackTargetRange)
+        {
+            controller.ChangeState(Define.MonsterState.Attack);
+            return true;
+        }
+
+        return false;
+    }
+
+    public virtual void Attack()
+    {
+        controller.StartCoroutine(AttackRoutione());
+    }
+
+    public virtual IEnumerator AttackRoutione()
+    {
+        Managers.Battle.AttackCalculation(controller, attackTarget);
+        yield return new WaitForSeconds(1f);
+        controller.ChangeState(Define.MonsterState.Follow);
+    }
+
+    public virtual bool CheckDie()
+    {
+        if (controller.status.currentNowHP <= 0.0)
+        {
+            controller.ChangeState(Define.MonsterState.Die);
+            return true;
+        }    
+
+        return false;
+    }
+
+    public virtual void Die()
+    {
+        controller.isDead = true;
+        controller.StopAllCoroutines();
+        controller.StartCoroutine(DieRoutine());
+    }
+
+    public virtual IEnumerator DieRoutine()
+    {
+        yield return new WaitForSeconds(2);
+        Managers.Object.ClearMonster(controller);
+    }
 }
 
 namespace Monsters
 {
     public class BaseMonster : Monster
     {
-        public BaseMonster(MonsterData _data, MonsterController _controller, Status _status)
+        public BaseMonster(MonsterData _data, MonsterController _controller)
         {
             data = _data;
             controller = _controller;
-            status = _status;
         }
     }
 }
@@ -129,9 +174,11 @@ namespace Monsters
 public class MonsterData
 {
     public float findAttackTargetRange;
+    public float attackTargetRange;
     public MonsterData()
     {
         findAttackTargetRange = 2.0f;
+        attackTargetRange = 1.0f;
     }
 }
 

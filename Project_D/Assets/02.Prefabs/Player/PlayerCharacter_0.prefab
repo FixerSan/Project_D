@@ -2032,6 +2032,7 @@ MonoBehaviour:
   changeState: 0
   rb: {fileID: 0}
   anim: {fileID: 0}
+  isDead: 0
 --- !u!50 &4738673400191296881
 Rigidbody2D:
   serializedVersion: 4
@@ -2063,7 +2064,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.4}

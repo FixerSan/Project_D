@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine.Rendering.Universal;
 
 namespace PlayerStates
@@ -11,6 +12,7 @@ namespace PlayerStates
         public override void Update(PlayerController _entity)
         {
             if (_entity.player.CheckMove()) return;
+            if (_entity.player.CheckAttack()) return;
         }
         public override void Exit(PlayerController _entity)
         {
@@ -30,14 +32,14 @@ namespace PlayerStates
         }
         public override void Exit(PlayerController _entity)
         {
-            
+            _entity.player.Stop();
         }
     }
     public class Attack : State<PlayerController>
     {
         public override void Enter(PlayerController _entity)
         {
-
+            _entity.player.Attack();
         }
         public override void Update(PlayerController _entity)
         {
@@ -67,7 +69,7 @@ namespace PlayerStates
     {
         public override void Enter(PlayerController _entity)
         {
-
+            _entity.player.Die();
         }
         public override void Update(PlayerController _entity)
         {

@@ -21,6 +21,11 @@ public class Define
         Create, Idle, Move, Follow, Attack, SkillCast, Die
     }
 
+    public enum MemberState
+    {
+        Idle, Move, Attack, SkillCast, Die
+    }
+
 
     public enum VoidEventType
     {

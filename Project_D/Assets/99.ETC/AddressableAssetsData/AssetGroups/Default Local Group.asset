@@ -16,7 +16,17 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 64c11dd34cca1fa468236e04da8dcfa9
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: b5f9833c4f656614bb61686857f0ec28
+    m_Address: Main Camera.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+  - m_GUID: f1178b2393c6c404689cc76a3d13e0c4
+    m_Address: Member_0.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3909b773da7e7b34fa5db52770212107, type: 2}
   m_SchemaSet:

@@ -8,7 +8,6 @@ namespace MonsterStates
         {
             public override void Enter(MonsterController _entity)
             {
-                Debug.Log("아니 이게 왜 두번 울려?");
                 _entity.monster.Created();
             }
             public override void Update(MonsterController _entity)
@@ -61,18 +60,19 @@ namespace MonsterStates
             }
             public override void Update(MonsterController _entity)
             {
+                if (_entity.monster.CheckAttack()) return;
                 _entity.monster.Follow();
             }
             public override void Exit(MonsterController _entity)
             {
-
+                _entity.monster.Stop();
             }
         }
         public class Attack : State<MonsterController>
         {
             public override void Enter(MonsterController _entity)
             {
-
+                _entity.monster.Attack();
             }
             public override void Update(MonsterController _entity)
             {
@@ -102,7 +102,7 @@ namespace MonsterStates
         {
             public override void Enter(MonsterController _entity)
             {
-
+                _entity.monster.Die();
             }
             public override void Update(MonsterController _entity)
             {

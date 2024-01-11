@@ -31,16 +31,4 @@ public class IngameSystem
     {
 
     }
-
-    public void CheckPlayerMove()
-    {
-        if (player == null) return;
-        if (joystickInput != Vector2.zero)
-            PlayerMove();
-    }
-
-    public void PlayerMove()
-    {
-        player.controller.rb.velocity = joystickInput * player.status.CurrentSpeed * Time.fixedDeltaTime;
-    }
 }

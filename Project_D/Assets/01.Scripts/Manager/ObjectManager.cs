@@ -1,5 +1,6 @@
 using Monsters;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectManager
@@ -25,10 +26,14 @@ public class ObjectManager
 
     public List<MonsterController> monsters = new List<MonsterController>();
 
-    public void SpawnPlayer(int _playerCharacterIndex, Vector3 _playerPos)
+
+
+    public List<MemberController> members = new List<MemberController>();
+
+    public PlayerController SpawnPlayer(int _playerCharacterIndex, Vector3 _playerPos)
     {
         playerController = Managers.Resource.Instantiate($"PlayerCharacter_{_playerCharacterIndex}").GetOrAddComponent<PlayerController>();
-        Player player = new Player(new PlayerData(), playerController, new Status());
+        Player player = new Player(new PlayerData(), playerController);
         Dictionary<Define.PlayerState, State<PlayerController>> states = new Dictionary<Define.PlayerState, State<PlayerController>>();
         states.Add(Define.PlayerState.Idle, new PlayerStates.Idle());
         states.Add(Define.PlayerState.Move, new PlayerStates.Move());
@@ -36,10 +41,46 @@ public class ObjectManager
         states.Add(Define.PlayerState.SkillCast, new PlayerStates.SkillCast());
         states.Add(Define.PlayerState.Die, new PlayerStates.Die());
         playerController.SetPosition(_playerPos);
-        playerController.Init(player, states);
+        playerController.Init(player, states, new Status());
+
+        return playerController;
     }
 
-    public void SpawnMonster(int _monsterIndex, Vector3 _monsterPos)
+    public MemberController SpawnMember(int _memberIndex, Vector3 _memberPos)
+    {
+        MemberController controller = Managers.Resource.Instantiate($"Member_{_memberIndex}").GetOrAddComponent<MemberController>();
+        Member member = null;
+        Dictionary<Define.MemberState, State<MemberController>> states = new Dictionary<Define.MemberState, State<MemberController>>();
+
+        switch(_memberIndex)
+        {
+            case 0:
+                member = new BaseMember(new MonsterData(), controller);
+                states.Add(Define.MemberState.Idle, new MemberStates.Base.Idle());
+                states.Add(Define.MemberState.Move, new MemberStates.Base.Move());
+                states.Add(Define.MemberState.Attack, new MemberStates.Base.Attack());
+                states.Add(Define.MemberState.SkillCast, new MemberStates.Base.SkillCast());
+                states.Add(Define.MemberState.Die, new MemberStates.Base.Die());
+                break;
+
+            default:
+                member = new BaseMember(new MonsterData(), controller);
+                states.Add(Define.MemberState.Idle, new MemberStates.Base.Idle());
+                states.Add(Define.MemberState.Move, new MemberStates.Base.Move());
+                states.Add(Define.MemberState.Attack, new MemberStates.Base.Attack());
+                states.Add(Define.MemberState.SkillCast, new MemberStates.Base.SkillCast());
+                states.Add(Define.MemberState.Die, new MemberStates.Base.Die());
+                break;
+        }
+
+        controller.SetPosition(_memberPos);
+        controller.Init(member, states, new Status());
+        members.Add(controller);
+
+        return controller;
+    }
+
+    public MonsterController SpawnMonster(int _monsterIndex, Vector3 _monsterPos)
     {
         MonsterController controller = Managers.Resource.Instantiate($"Monster_{_monsterIndex}").GetOrAddComponent<MonsterController>();
         BaseMonster monster = null;
@@ -48,7 +89,7 @@ public class ObjectManager
         switch (_monsterIndex)
         {
             case 0:
-                monster = new BaseMonster(new MonsterData(), controller, new Status());
+                monster = new BaseMonster(new MonsterData(), controller);
                 states.Add(Define.MonsterState.Create, new MonsterStates.Base.Create());
                 states.Add(Define.MonsterState.Idle, new MonsterStates.Base.Idle());
                 states.Add(Define.MonsterState.Move, new MonsterStates.Base.Move());
@@ -59,7 +100,7 @@ public class ObjectManager
                 break;
 
             default:
-                monster = new BaseMonster(new MonsterData(), controller, new Status());
+                monster = new BaseMonster(new MonsterData(), controller);
                 states.Add(Define.MonsterState.Create, new MonsterStates.Base.Create());
                 states.Add(Define.MonsterState.Idle, new MonsterStates.Base.Create());
                 states.Add(Define.MonsterState.Move, new MonsterStates.Base.Move());
@@ -70,8 +111,10 @@ public class ObjectManager
                 break;
         }
         controller.SetPosition(_monsterPos);
-        controller.Init(monster, states);
+        controller.Init(monster, states,new Status());
         monsters.Add(controller);
+
+        return controller;
     }
 
     public void ClearPlayer()
