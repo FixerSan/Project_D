@@ -8,9 +8,9 @@ public class PlayerController : Actor
     public Player player;
     private StateMachine<PlayerController> fsm;
     private Dictionary<Define.PlayerState, State<PlayerController>> states;
-    private Define.PlayerState currentState;
     public Dictionary<Define.PlayerState, int> animationHashs = new Dictionary<Define.PlayerState, int>();
 
+    public Define.PlayerState currentState;
     public Define.PlayerState changeState;
     public Rigidbody2D rb;
     public Animator anim;
@@ -38,6 +38,7 @@ public class PlayerController : Actor
         init = true;
 
         player.FindAttackTarget();
+        status.currentNowHP = 10000;
     }
 
     public void Update()

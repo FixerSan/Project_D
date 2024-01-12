@@ -12,7 +12,9 @@ public class Monster
     private Vector3 dir;
     #region Temp
     private Collider2D[] tempColliders;
-    private Actor tempActor;
+    private PlayerController tempPlayer;
+    private MemberController tempMember;
+    private Vector3 tempVector;
     #endregion
 
     public void Created()
@@ -82,10 +84,10 @@ public class Monster
             //플레이어 캐릭터 먼저 찾기
             for (int i = 0; i < tempColliders.Length; i++)
             {
-                tempActor = tempColliders[i].GetComponent<PlayerController>();
-                if (tempActor != null)
+                tempPlayer = tempColliders[i].GetComponent<PlayerController>();
+                if (tempPlayer != null && tempPlayer.currentState != Define.PlayerState.Die)
                 {
-                    SetAttackTarget(tempActor);
+                    SetAttackTarget(tempPlayer);
                     break;
                 }
             }
@@ -93,17 +95,17 @@ public class Monster
 
             for (int i = 0; i < tempColliders.Length; i++)
             {
-                tempActor = tempColliders[i].GetComponent<MemberController>();
-                if (tempActor != null)
+                tempMember = tempColliders[i].GetComponent<MemberController>();
+                if (tempMember != null && tempMember.currentState != Define.MemberState.Die)
                 {
                     if (attackTarget == null)
                     {
-                        SetAttackTarget(tempActor);
+                        SetAttackTarget(tempMember);
                         continue;
                     }
 
-                    if (Vector2.Distance(tempActor.transform.position, controller.transform.position) < Vector2.Distance(attackTarget.transform.position, controller.transform.position))
-                        attackTarget = tempActor;
+                    if (Vector2.Distance(tempMember.transform.position, controller.transform.position) < Vector2.Distance(attackTarget.transform.position, controller.transform.position))
+                        attackTarget = tempMember;
                 }
             }
             yield return new WaitForSeconds(0.5f);
@@ -129,6 +131,11 @@ public class Monster
 
     public virtual IEnumerator AttackRoutione()
     {
+        tempVector = attackTarget.transform.position - controller.transform.position;
+        if (tempVector.x >= 0)
+            controller.ChangeDirection(Define.Direction.Left);
+        if (tempVector.x <= 0)
+            controller.ChangeDirection(Define.Direction.Right);
         Managers.Battle.AttackCalculation(controller, attackTarget);
         yield return new WaitForSeconds(1f);
         controller.ChangeState(Define.MonsterState.Follow);

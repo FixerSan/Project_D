@@ -8,7 +8,8 @@ public class Player
     public Actor attackTarget;
 
     private Collider2D[] tempColliders;
-    private Actor tempActorController;
+    private MonsterController tempMonsterController;
+    private Vector3 tempVector;
 
 
     public Player(PlayerData _data, PlayerController _controller)
@@ -70,17 +71,17 @@ public class Player
 
             for (int i = 0; i < tempColliders.Length; i++)
             {
-                tempActorController = tempColliders[i].GetComponent<MonsterController>();
-                if (tempActorController != null)
+                tempMonsterController = tempColliders[i].GetComponent<MonsterController>();
+                if (tempMonsterController != null && tempMonsterController.currentState != Define.MonsterState.Die)
                 {
                     if (attackTarget == null)
                     {
-                        SetAttackTarget(tempActorController);
+                        SetAttackTarget(tempMonsterController);
                         continue;
                     }
 
-                    if (Vector2.Distance(tempActorController.transform.position, controller.transform.position) < Vector2.Distance(attackTarget.transform.position, controller.transform.position))
-                        attackTarget = tempActorController;
+                    if (Vector2.Distance(tempMonsterController.transform.position, controller.transform.position) < Vector2.Distance(attackTarget.transform.position, controller.transform.position))
+                        attackTarget = tempMonsterController;
                 }
             }
             yield return new WaitForSeconds(0.5f);
@@ -102,6 +103,11 @@ public class Player
 
     public virtual void Attack()
     {
+        tempVector = attackTarget.transform.position - controller.transform.position;
+        if (tempVector.x >= 0)
+            controller.ChangeDirection(Define.Direction.Left);
+        if(tempVector.x <= 0)
+            controller.ChangeDirection(Define.Direction.Right);
         controller.StartCoroutine(AttackRoutione());
     }
 

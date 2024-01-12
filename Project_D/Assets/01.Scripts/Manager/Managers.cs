@@ -35,10 +35,10 @@ public class Managers : Singleton<Managers>
         Instance.ui = new UIManager();
         Instance.screen = new ScreenManager();
         Instance.scene = new SceneManager();
-        Instance.input = new InputManager();
         Instance._object = new ObjectManager();
         Instance.battle = new BattleManager();
 
+        Instance.input = InputManager.Instance;
         Instance.routine = CoroutineManager.Instance;
         Instance.game = GameManager.Instance;
     }

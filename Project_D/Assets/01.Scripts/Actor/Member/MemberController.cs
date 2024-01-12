@@ -9,9 +9,9 @@ public class MemberController : Actor
     public Member member;
     private StateMachine<MemberController> fsm;
     private Dictionary<Define.MemberState, State<MemberController>> states;
-    private Define.MemberState currentState;
     public Dictionary<Define.MemberState, int> animationHashs = new Dictionary<Define.MemberState, int>();
 
+    public Define.MemberState currentState;
     public Define.MemberState changeState;
     public Rigidbody2D rb;
     public Animator anim;
