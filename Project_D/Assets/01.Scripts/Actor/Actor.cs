@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Actor : MonoBehaviour
 {
     public Status status;
-    protected Dictionary<IEnumerator, Coroutine> routines = new Dictionary<IEnumerator, Coroutine>();
+    public Dictionary<string, Coroutine> routines = new Dictionary<string, Coroutine>();
     protected Vector3 tempVecter = Vector3.zero;
 
     public void SetPosition(Vector3 _pos)
@@ -23,27 +23,5 @@ public abstract class Actor : MonoBehaviour
         if (_direction == Define.Direction.Right) tempVecter.y = 0;
 
         transform.eulerAngles = tempVecter;
-    }
-
-    public new void StartCoroutine(IEnumerator _routine)
-    {
-        routines.Add(_routine, base.StartCoroutine(_routine));
-    }
-
-    public new void StopCoroutine(IEnumerator _routine)
-    {
-        base.StopCoroutine(routines[_routine]);
-        routines.Remove(_routine);
-    }
-
-    public new void StopAllCoroutines()
-    {
-        foreach (var routine in routines)
-        {
-            if(routine.Value != null)
-            base.StopCoroutine(routine.Value);
-        }
-
-        routines.Clear();
     }
 }

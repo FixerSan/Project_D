@@ -14,7 +14,7 @@ namespace NPCs
     {
         public override void Interaction()
         {
-            Debug.Log("dsds");
+            Managers.Dialog.Call(0);
         }
     }
 }

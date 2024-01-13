@@ -43,7 +43,7 @@ namespace PlayerStates
         }
         public override void Update(PlayerController _entity)
         {
-
+            if (_entity.player.CheckMove_Attack()) return;
         }
         public override void Exit(PlayerController _entity)
         {

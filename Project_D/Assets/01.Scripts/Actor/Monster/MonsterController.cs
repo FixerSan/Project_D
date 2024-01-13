@@ -48,7 +48,6 @@ public class MonsterController : Actor
         }
         currentState = _nextState;
         changeState = _nextState;
-        Debug.Log(currentState);
         anim.Play(animationHashs[_nextState]);
         fsm.ChangeState(states[_nextState]);
     }

@@ -7,10 +7,13 @@ public class Managers : Singleton<Managers>
     private UIManager ui;
     private ScreenManager screen;
     private SceneManager scene;
-    private InputManager input;
     private ObjectManager _object;
     private BattleManager battle;
+    private DataManager data;
+    private DialogManager dialog;
+    private EventManager _event;
 
+    private InputManager input;
     private CoroutineManager routine;
     private GameManager game;
 
@@ -19,10 +22,13 @@ public class Managers : Singleton<Managers>
     public static UIManager UI { get { return Instance?.ui; } }
     public static ScreenManager Screen { get { return Instance?.screen; } }
     public static SceneManager Scene { get { return Instance?.scene; } }
-    public static InputManager Input { get { return Instance?.input; } }
     public static ObjectManager Object { get { return Instance?._object; } }
     public static BattleManager Battle { get { return Instance?.battle; } }
+    public static DataManager Data { get { return Instance?.data; } }
+    public static DialogManager Dialog { get { return Instance?.dialog; } }
+    public static EventManager Event { get { return Instance?._event; } }
 
+    public static InputManager Input { get { return Instance?.input; } }
     public static CoroutineManager Routine { get { return Instance?.routine; } }
     public static GameManager Game { get { return Instance?.game; } }
 
@@ -37,6 +43,9 @@ public class Managers : Singleton<Managers>
         Instance.scene = new SceneManager();
         Instance._object = new ObjectManager();
         Instance.battle = new BattleManager();
+        Instance.data = new DataManager();
+        Instance.dialog = new DialogManager();
+        Instance._event = new EventManager();
 
         Instance.input = InputManager.Instance;
         Instance.routine = CoroutineManager.Instance;

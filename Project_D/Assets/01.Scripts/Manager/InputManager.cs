@@ -21,7 +21,8 @@ public class InputManager : Singleton<InputManager>
     public void CheckNPCInteraction()
     {
         npc = null;
-        tempRaycast = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.forward);
+        if (Camera.main != null)
+            tempRaycast = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.forward);
         if(tempRaycast)
         {
             npc = tempRaycast.transform.GetComponent<NPCController>();

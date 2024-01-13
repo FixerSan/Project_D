@@ -28,6 +28,19 @@ public class Player
         return false;
     }
 
+    public bool CheckMove_Attack()
+    {
+        if (Managers.Input.joystickInputValue != Vector2.zero)
+        {
+            controller.StopCoroutine(controller.routines[nameof(AttackRoutine)]);
+            if(controller.routines.ContainsKey(nameof(AttackRoutine)))
+                controller.routines.Remove(nameof(AttackRoutine));
+            controller.ChangeState(Define.PlayerState.Move);
+            return true;
+        }
+        return false;
+    }
+
     public bool CheckStop()
     {
         if(Managers.Input.joystickInputValue == Vector2.zero)
@@ -108,14 +121,15 @@ public class Player
             controller.ChangeDirection(Define.Direction.Left);
         if(tempVector.x <= 0)
             controller.ChangeDirection(Define.Direction.Right);
-        controller.StartCoroutine(AttackRoutione());
+        controller.routines.Add(nameof(AttackRoutine),controller.StartCoroutine(AttackRoutine()));
     }
 
-    public virtual IEnumerator AttackRoutione()
+    public virtual IEnumerator AttackRoutine()
     {
         Managers.Battle.AttackCalculation(controller, attackTarget);
         yield return new WaitForSeconds(1f);
         controller.ChangeState(Define.PlayerState.Idle);
+        controller.routines.Remove(nameof(AttackRoutine));
     }
     public virtual bool CheckDie()
     {

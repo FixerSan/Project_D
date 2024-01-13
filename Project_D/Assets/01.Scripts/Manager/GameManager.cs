@@ -14,15 +14,16 @@ public class GameManager : Singleton<GameManager>
     {
         Managers.Resource.LoadAllAsync<Object>("Preload", _completeCallback: () =>                  //프리로드 리소스 로드
         {
-            gameSettings = Managers.Resource.Load<GameSettingsProfile>("GameSettingsProfile");      //게임 세팅 설정
-            if (gameSettings.isDebuging)                                                            //디버깅 중일 때
+            Managers.Data.LoadPreData(() => 
             {
-                Debug.Log("y");
-                Managers.Scene.LoadScene(gameSettings.startScene);
-                return;
-            }
-            //디버깅 중이 아닐 때
-            Debug.Log("n");
+                gameSettings = Managers.Resource.Load<GameSettingsProfile>("GameSettingsProfile");      //게임 세팅 설정
+                if (gameSettings.isDebuging)                                                            //디버깅 중일 때
+                {
+                    Managers.Scene.LoadScene(gameSettings.startScene);
+                    return;
+                }            
+            });
+
         });
     }
 

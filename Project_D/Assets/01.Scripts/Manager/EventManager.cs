@@ -62,4 +62,8 @@ public class EventManager
         updateEvent -= _eventAction;
     }
 
+    public void DialogEvent(int _index)
+    {
+
+    }
 }

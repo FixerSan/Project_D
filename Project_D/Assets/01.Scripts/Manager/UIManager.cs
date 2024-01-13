@@ -10,6 +10,7 @@ public class UIManager
 
     public UIScene SceneUI { get { return sceneUI; } }          // SceneUI 프로퍼티 선언
     public Dictionary<Define.UIType, UIPopup> activePopups = new Dictionary<Define.UIType, UIPopup>();
+    public UIDialog dialogUI;
 
     private Stack<UIPopup> popupStack = new Stack<UIPopup>();   // 팝업 스택
     private Queue<UIToast> toastQueue = new Queue<UIToast>();   // 인스턴트 메세지 스택
@@ -220,5 +221,23 @@ public class UIManager
 
         Time.timeScale = 1;
         sceneUI = null;
+    }
+
+
+    public UIDialog ShowDialogUI(DialogData _data) 
+    {
+        if(dialogUI == null)
+        {
+            GameObject go = Managers.Resource.Instantiate("UIDialog", _pooling: true);
+            dialogUI = go.GetOrAddComponent<UIDialog>();
+        }
+        dialogUI.Redraw(_data);
+        return dialogUI;
+    }
+
+    public void CloseDialogUI()
+    {
+        Managers.Resource.Destroy(dialogUI.gameObject);
+        dialogUI = null;
     }
 }
