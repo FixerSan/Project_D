@@ -65,6 +65,5 @@ public class DialogData
     public int nextIndex;
     public string name;
     public string sentence;
-    public string uiType;
     public string buttonString;
 }
