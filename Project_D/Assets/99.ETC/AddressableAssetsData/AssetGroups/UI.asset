@@ -38,7 +38,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Preload
   - m_GUID: 0e7116a91b3999d4981339bce25469d8
-    m_Address: UIDialog.prefab
+    m_Address: UIPopup_Dialog.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Preload
+  - m_GUID: eabab8275538b424187ab36dbcbe035a
+    m_Address: UIPopup_SelectEvent.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Preload

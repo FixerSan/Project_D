@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 3404608739540527518}
   - component: {fileID: 3404608739540528737}
   m_Layer: 5
-  m_Name: UIDialog
+  m_Name: UIPopup_Dialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

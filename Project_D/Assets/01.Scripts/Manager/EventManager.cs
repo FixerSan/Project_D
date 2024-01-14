@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using static Define;
 
 public class EventManager
@@ -64,6 +65,31 @@ public class EventManager
 
     public void DialogEvent(int _index)
     {
+        switch (_index)
+        {
+            case 1:
+                Managers.UI.ShowSelectEventUI(0);
+                break;
+        }
+    }
 
+    public void SelectOneEvent(int _index)
+    {
+        switch(_index)
+        {
+            case 0:
+                Debug.Log("Yes");
+                break;
+        }
+    }
+
+    public void SelectTwoEvent(int _index)
+    {
+        switch (_index)
+        {
+            case 0:
+                Debug.Log("No");
+                break;
+        }
     }
 }

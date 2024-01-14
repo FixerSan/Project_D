@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
-public class UIDialog : UIBase
+public class UIPopup_Dialog : UIPopup
 {
     private DialogData data;
     public float typingSpeed;

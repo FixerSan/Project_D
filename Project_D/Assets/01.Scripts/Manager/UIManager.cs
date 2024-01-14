@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +11,8 @@ public class UIManager
 
     public UIScene SceneUI { get { return sceneUI; } }          // SceneUI 프로퍼티 선언
     public Dictionary<Define.UIType, UIPopup> activePopups = new Dictionary<Define.UIType, UIPopup>();
-    public UIDialog dialogUI;
+    public UIPopup_Dialog dialogUI;
+    public UIPopup_SelectEvent selectEventUI;
 
     private Stack<UIPopup> popupStack = new Stack<UIPopup>();   // 팝업 스택
     private Queue<UIToast> toastQueue = new Queue<UIToast>();   // 인스턴트 메세지 스택
@@ -224,14 +226,14 @@ public class UIManager
     }
 
 
-    public UIDialog ShowDialogUI(DialogData _data) 
+    public UIPopup_Dialog ShowDialogUI(int _index) 
     {
         if(dialogUI == null)
         {
-            GameObject go = Managers.Resource.Instantiate("UIDialog", _pooling: true);
-            dialogUI = go.GetOrAddComponent<UIDialog>();
+            GameObject go = Managers.Resource.Instantiate("UIPopup_Dialog", _pooling: true);
+            dialogUI = go.GetOrAddComponent<UIPopup_Dialog>();
         }
-        dialogUI.Redraw(_data);
+        dialogUI.Redraw(Managers.Data.GetDialogData(_index));
         return dialogUI;
     }
 
@@ -239,5 +241,22 @@ public class UIManager
     {
         Managers.Resource.Destroy(dialogUI.gameObject);
         dialogUI = null;
+    }
+
+    public UIPopup_SelectEvent ShowSelectEventUI(int _index)
+    {
+        if(selectEventUI == null)
+        {
+            GameObject go = Managers.Resource.Instantiate("UIPopup_SelectEvent", _pooling: true);
+            selectEventUI = go.GetOrAddComponent<UIPopup_SelectEvent>();
+        }
+        selectEventUI.RedrawUI(Managers.Data.GetSelectEventData(_index));
+        return selectEventUI;
+    }
+
+    public void CloseSelectEventUI()
+    {
+        Managers.Resource.Destroy(selectEventUI.gameObject);
+        selectEventUI = null;
     }
 }

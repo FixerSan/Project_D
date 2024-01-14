@@ -11,7 +11,7 @@ public class DialogManager : MonoBehaviour
     public void Call(int _index, Action _callback = null)
     {
         currentData = Managers.Data.GetDialogData(_index);
-        Managers.UI.ShowDialogUI(currentData);
+        Managers.UI.ShowDialogUI(currentData.index);
         callback = _callback;
     }
 
@@ -19,12 +19,19 @@ public class DialogManager : MonoBehaviour
     {
         if (currentData.nextIndex == -2)
         {
-            Managers.Event.DialogEvent(currentData.index);
+            Managers.Routine.StartCoroutine(EventCallRoutine());
             _callback.Invoke(true);
         }
 
         else
             _callback.Invoke(false);
+    }
+
+    public IEnumerator EventCallRoutine()
+    {
+        yield return new WaitForSeconds(1);
+        Managers.Event.DialogEvent(currentData.index);
+        EndDialog();
     }
 
     public void OnClick_NextButton()
@@ -34,7 +41,7 @@ public class DialogManager : MonoBehaviour
             EndDialog();
         }
 
-        else
+        else if(currentData.nextIndex != -2)
         {
             Call(currentData.nextIndex);
         }
