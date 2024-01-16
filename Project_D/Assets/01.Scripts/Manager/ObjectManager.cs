@@ -8,6 +8,18 @@ public class ObjectManager
     public PlayerController PlayerController { get { return playerController; } }
     private PlayerController playerController;
 
+    public Vector3 PlayerMovePos 
+    {
+        get
+        {
+            if(playerMovePos == null)
+                CreatePlayerMovePos();
+            return playerMovePos.transform.position; 
+        }
+    }
+    private PlayerMovePos playerMovePos;
+
+
     public Transform PlayerControllerTrans
     {
         get
@@ -37,6 +49,7 @@ public class ObjectManager
         Dictionary<Define.PlayerState, State<PlayerController>> states = new Dictionary<Define.PlayerState, State<PlayerController>>();
         states.Add(Define.PlayerState.Idle, new PlayerStates.Idle());
         states.Add(Define.PlayerState.Move, new PlayerStates.Move());
+        states.Add(Define.PlayerState.Follow, new PlayerStates.Follow());
         states.Add(Define.PlayerState.Attack, new PlayerStates.Attack());
         states.Add(Define.PlayerState.SkillCast, new PlayerStates.SkillCast());
         states.Add(Define.PlayerState.Die, new PlayerStates.Die());
@@ -138,5 +151,13 @@ public class ObjectManager
             Managers.Resource.Destroy(monsters[i].gameObject);
 
         monsters.Clear();
+    }
+
+    public void CreatePlayerMovePos()
+    {
+        GameObject go = GameObject.Find("PlayerMovePos");
+        if(go == null)
+            go = Managers.Resource.Instantiate("PlayerMovePos");
+        playerMovePos = go.GetOrAddComponent<PlayerMovePos>();
     }
 }

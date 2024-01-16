@@ -5,12 +5,13 @@ public class Player
 {
     public PlayerData data;
     public PlayerController controller;
-    public Actor attackTarget;
+    public MonsterController attackTarget;
 
     private Collider2D[] tempColliders;
     private MonsterController tempMonsterController;
     private Vector3 tempVector;
 
+    private Vector3 dir;
 
     public Player(PlayerData _data, PlayerController _controller)
     {
@@ -56,6 +57,7 @@ public class Player
     {
         if (_moveDir.x > 0) controller.ChangeDirection(Define.Direction.Left);
         if (_moveDir.x < 0) controller.ChangeDirection(Define.Direction.Right);
+        _moveDir = _moveDir.normalized;
 
         controller.rb.velocity = _moveDir * controller.status.CurrentSpeed * 10 * Time.fixedDeltaTime;
     }
@@ -65,41 +67,69 @@ public class Player
         controller.rb.velocity = Vector2.zero;
     }
 
-    public void SetAttackTarget(Actor _attackTarget)
+    public virtual bool CheckFollow()
+    {
+        if (attackTarget != null)
+        {
+            controller.ChangeState(Define.PlayerState.Follow);
+            return true;
+        }
+        return false;
+    }
+
+    public virtual void Follow()
+    {
+        if (attackTarget == null)
+        {
+            controller.ChangeState(Define.PlayerState.Idle);
+            return;
+        }
+
+        dir = (attackTarget.transform.position - controller.transform.position).normalized;
+        Move(dir);
+    }
+
+    public void SetAttackTarget(MonsterController _attackTarget)
     {
         attackTarget = _attackTarget;
     }
-
     public virtual void FindAttackTarget()
     {
-        controller.StartCoroutine(FindAttackTargetRoutine());
+        attackTarget = null;
+
+        //범위 안에 플레이어 캐릭터를 찾고
+        tempColliders = Physics2D.OverlapCircleAll(controller.transform.position, data.findAttackTargetRange);
+
+        for (int i = 0; i < tempColliders.Length; i++)
+        {
+            tempMonsterController = tempColliders[i].GetComponent<MonsterController>();
+            if (tempMonsterController != null && tempMonsterController.currentState != Define.MonsterState.Die)
+            {
+                if (attackTarget == null)
+                {
+                    SetAttackTarget(tempMonsterController);
+                    continue;
+                }
+
+                if (Vector2.Distance(tempMonsterController.transform.position, controller.transform.position) < Vector2.Distance(attackTarget.transform.position, controller.transform.position))
+                    attackTarget = tempMonsterController;
+            }
+        }
+    }
+    public virtual void FindAttackTargetLoop()
+    {
+        controller.StartCoroutine(FindAttackTargetLoopRoutine());
     }
 
-    public virtual IEnumerator FindAttackTargetRoutine()
+    public virtual IEnumerator FindAttackTargetLoopRoutine()
     {
         while (!controller.isDead)
         {
-            //범위 안에 플레이어 캐릭터를 찾고
-            tempColliders = Physics2D.OverlapCircleAll(controller.transform.position, data.findAttackTargetRange);
-
-            for (int i = 0; i < tempColliders.Length; i++)
-            {
-                tempMonsterController = tempColliders[i].GetComponent<MonsterController>();
-                if (tempMonsterController != null && tempMonsterController.currentState != Define.MonsterState.Die)
-                {
-                    if (attackTarget == null)
-                    {
-                        SetAttackTarget(tempMonsterController);
-                        continue;
-                    }
-
-                    if (Vector2.Distance(tempMonsterController.transform.position, controller.transform.position) < Vector2.Distance(attackTarget.transform.position, controller.transform.position))
-                        attackTarget = tempMonsterController;
-                }
-            }
+            FindAttackTarget();
             yield return new WaitForSeconds(0.5f);
         }
     }
+
 
 
     public virtual bool CheckAttack()
@@ -116,6 +146,12 @@ public class Player
 
     public virtual void Attack()
     {
+        if (attackTarget.currentState == Define.MonsterState.Die)
+            FindAttackTarget();
+
+        if (attackTarget == null)
+            controller.ChangeState(Define.PlayerState.Idle);
+
         tempVector = attackTarget.transform.position - controller.transform.position;
         if (tempVector.x >= 0)
             controller.ChangeDirection(Define.Direction.Left);

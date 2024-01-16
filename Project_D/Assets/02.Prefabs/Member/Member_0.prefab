@@ -1883,9 +1883,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d06f2944defad429a111b20f50dfb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   changeState: 0
   rb: {fileID: 0}
   anim: {fileID: 0}
+  isDead: 0
 --- !u!50 &4738673400191296881
 Rigidbody2D:
   serializedVersion: 4
@@ -1917,7 +1919,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.4}

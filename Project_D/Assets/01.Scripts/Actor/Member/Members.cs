@@ -33,7 +33,7 @@ public class Member
         if (_moveDir.x > 0) controller.ChangeDirection(Define.Direction.Left);
         if (_moveDir.x < 0) controller.ChangeDirection(Define.Direction.Right);
 
-        controller.rb.velocity = _moveDir * controller.status.CurrentSpeed * 10 * Time.fixedDeltaTime;
+        controller.rb.velocity = _moveDir.normalized * controller.status.CurrentSpeed * 10 * Time.fixedDeltaTime;
     }
 
     public void Stop()

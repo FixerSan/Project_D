@@ -30,7 +30,7 @@ namespace MemberStates
             public override void Update(MemberController _entity)
             {
                 if (_entity.member.CheckStop()) return;
-                _entity.member.Move(Managers.Input.joystickInputValue);
+                _entity.member.Move(Managers.Object.PlayerMovePos - _entity.transform.position);
             }
             public override void Exit(MemberController _entity)
             {

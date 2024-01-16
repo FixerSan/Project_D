@@ -28,6 +28,7 @@ public class PlayerController : Actor
         rb = gameObject.GetOrAddComponent<Rigidbody2D>();
         animationHashs.Clear();
         animationHashs.Add(Define.PlayerState.Idle, Animator.StringToHash("0_idle"));
+        animationHashs.Add(Define.PlayerState.Follow, Animator.StringToHash("1_Run"));
         animationHashs.Add(Define.PlayerState.Move, Animator.StringToHash("1_Run"));
         animationHashs.Add(Define.PlayerState.Attack, Animator.StringToHash("2_Attack_Normal"));
         animationHashs.Add(Define.PlayerState.Die, Animator.StringToHash("4_Death")); 
@@ -37,7 +38,7 @@ public class PlayerController : Actor
         isDead = false;
         init = true;
 
-        player.FindAttackTarget();
+        player.FindAttackTargetLoop();
         status.currentNowHP = 10000;
     }
 

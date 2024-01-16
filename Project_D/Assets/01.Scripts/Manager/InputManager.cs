@@ -15,7 +15,7 @@ public class InputManager : Singleton<InputManager>
 
     public void InputJoystick(Vector2 _joystickInputValue)
     {
-        joystickInputValue = _joystickInputValue;
+        joystickInputValue = _joystickInputValue.normalized;
     }
 
     public void CheckNPCInteraction()

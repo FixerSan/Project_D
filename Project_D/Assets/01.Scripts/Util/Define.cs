@@ -8,7 +8,7 @@ public class Define
 
     public enum PlayerState
     {
-        Idle, Move, Attack, SkillCast, Die
+        Idle, Follow, Move, Attack, SkillCast, Die
     }
 
     public enum Enemy
