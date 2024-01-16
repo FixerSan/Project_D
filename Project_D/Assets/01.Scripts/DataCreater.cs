@@ -6,9 +6,8 @@ using UnityEngine;
 
 public class DataCreater : MonoBehaviour
 {
-    public SelectEventDatas datas;
+    public DungeonCleardDatas datas;
     public string fileName;
-
 
     [ContextMenu("CreateData")]
     public void CreateData()

@@ -11,6 +11,11 @@ public class Define
         Idle, Follow, Move, Attack, SkillCast, Die
     }
 
+    public enum PlayerTier
+    {
+        Low, Middle, High
+    }
+
     public enum Enemy
     {
 
@@ -51,7 +56,7 @@ public class Define
 
     public enum UIType
     {
-
+        UIPopup_Dungeon_Challenge
     }
 
     public enum Scene

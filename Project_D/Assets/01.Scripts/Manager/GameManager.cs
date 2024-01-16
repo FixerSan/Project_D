@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    public UserData userData;
     public GameSettingsProfile gameSettings;
+    public DungeonSystem dungeon = new DungeonSystem();
 
     private void Awake()
     {
@@ -31,7 +33,35 @@ public class GameManager : Singleton<GameManager>
     {
         Server.Instance.Login(() =>
         {
+            userData = Managers.Data.GetUserData(0);
             Managers.Scene.LoadScene(Define.Scene.Main);
         });
+    }
+}
+
+public class DungeonSystem
+{
+    public DungeonData currentDungeonData;
+
+    public bool CheckCleard(int _index)
+    {
+        DungeonCleardData _data = Managers.Data.GetDungeonClearedData(Managers.Game.userData.ID);
+        if (_index == 0) return _data.isCleardFirstDungeon;
+        return false;
+    }
+
+    public void SelectDungeon(int _index)
+    {
+
+    }
+
+    public void SelectCleardDungeon(int _index)
+    {
+
+    }
+
+    public void StartDungeon()
+    {
+
     }
 }

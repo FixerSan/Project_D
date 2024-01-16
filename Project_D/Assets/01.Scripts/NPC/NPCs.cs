@@ -10,11 +10,22 @@ public abstract class NPC
 
 namespace NPCs 
 {
-    public class TestNPC : NPC
+    namespace TestNPC
     {
-        public override void Interaction()
+        public class One : NPC
         {
-            Managers.Dialog.Call(0);
+            public override void Interaction()
+            {
+                Managers.Dialog.Call(0);
+            }
+        }
+
+        public class Two : NPC
+        {
+            public override void Interaction()
+            {
+                Managers.UI.ShowPopupUI<UIPopup_Dungeon_Challenge>();
+            }
         }
     }
 }

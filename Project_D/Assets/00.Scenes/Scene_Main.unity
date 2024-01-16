@@ -288,11 +288,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas:
     datas:
-    - index: 0
-      sentence: Choice
-      selectOneText: Yes
-      selectTwoText: No
-  fileName: SelectDatas
+    - UserID: 0
+      isCleardFirstDungeon: 1
+  fileName: Data_DungeonCleard
 --- !u!4 &1085453320
 Transform:
   m_ObjectHideFlags: 0
