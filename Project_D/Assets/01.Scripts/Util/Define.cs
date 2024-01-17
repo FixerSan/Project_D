@@ -56,7 +56,7 @@ public class Define
 
     public enum UIType
     {
-        UIPopup_Dungeon_Challenge
+        UIPopup_Dungeon_Challenge, UIPopup_Dungeon_Challenge_Select
     }
 
     public enum Scene

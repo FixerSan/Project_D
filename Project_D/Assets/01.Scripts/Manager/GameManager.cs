@@ -42,6 +42,7 @@ public class GameManager : Singleton<GameManager>
 public class DungeonSystem
 {
     public DungeonData currentDungeonData;
+    public bool isUsing = false;
 
     public bool CheckCleard(int _index)
     {
@@ -52,16 +53,21 @@ public class DungeonSystem
 
     public void SelectDungeon(int _index)
     {
-
+        currentDungeonData = Managers.Data.GetDungeonData(_index);
+        UIPopup_Dungeon_Challenge_Select ui = Managers.UI.ShowPopupUI<UIPopup_Dungeon_Challenge_Select>();
+        ui.DrawUI();
     }
 
     public void SelectCleardDungeon(int _index)
     {
-
+        currentDungeonData = Managers.Data.GetDungeonData(_index);
+        UIPopup_Dungeon_Challenge_Select ui = Managers.UI.ShowPopupUI<UIPopup_Dungeon_Challenge_Select>();
+        ui.DrawUI();
     }
 
     public void StartDungeon()
     {
-
+        Managers.Scene.LoadScene(Util.ParseEnum<Define.Scene>($"Scene_{currentDungeonData.name}_One"));
+        isUsing = true;
     }
 }
