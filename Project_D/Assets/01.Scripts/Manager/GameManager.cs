@@ -18,12 +18,13 @@ public class GameManager : Singleton<GameManager>
         {
             Managers.Data.LoadPreData(() => 
             {
-                gameSettings = Managers.Resource.Load<GameSettingsProfile>("GameSettingsProfile");      //게임 세팅 설정
-                if (gameSettings.isDebuging)                                                            //디버깅 중일 때
-                {
-                    Managers.Scene.LoadScene(gameSettings.startScene);
-                    return;
-                }            
+                //gameSettings = Managers.Resource.Load<GameSettingsProfile>("GameSettingsProfile");      //게임 세팅 설정
+                //if (gameSettings.isDebuging)                                                            //디버깅 중일 때
+                //{
+                //    Managers.Scene.LoadScene(gameSettings.startScene);
+                //    return;
+                //}
+                Managers.Scene.LoadScene(Define.Scene.Login);
             });
 
         });

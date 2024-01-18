@@ -10,7 +10,8 @@ public class MainScene : BaseScene
         Managers.Screen.CameraController.SetTarget(Managers.Object.SpawnPlayer(0, Vector3.zero).transform);
         Managers.Object.SpawnMonster(0, new Vector3(0, 3, 0));
         Managers.Object.SpawnMember(0, new Vector3(1, 1, 0));
-
+        Managers.Object.SpawnNPC(0, new Vector3(-1, -1, 0));
+        Managers.Object.SpawnNPC(1, new Vector3(1, -1, 0));
 
         _callback?.Invoke();
     }

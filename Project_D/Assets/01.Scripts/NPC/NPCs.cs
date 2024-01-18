@@ -12,7 +12,7 @@ namespace NPCs
 {
     namespace TestNPC
     {
-        public class One : NPC
+        public class Zero : NPC
         {
             public override void Interaction()
             {
@@ -20,7 +20,7 @@ namespace NPCs
             }
         }
 
-        public class Two : NPC
+        public class One : NPC
         {
             public override void Interaction()
             {

@@ -10,6 +10,7 @@ public class UIPopup_Dungeon_Challenge_Select : UIPopup
         BindImage(typeof(Images));
         BindButton(typeof(Buttons));
         BindEvent(GetButton((int)Buttons.Button_Start).gameObject, OnClick);
+        BindEvent(GetButton((int)Buttons.Button_Close).gameObject, ClosePopupUP);
         return true;
     }
 
@@ -30,6 +31,6 @@ public class UIPopup_Dungeon_Challenge_Select : UIPopup
 
     private enum Buttons
     {
-        Button_Start
+        Button_Start, Button_Close
     }
 }

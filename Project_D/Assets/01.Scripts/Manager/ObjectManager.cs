@@ -37,10 +37,8 @@ public class ObjectManager
     public Transform playerControllerTrans;
 
     public List<MonsterController> monsters = new List<MonsterController>();
-
-
-
     public List<MemberController> members = new List<MemberController>();
+    public List<NPCController> npcs = new List<NPCController>();
 
     public PlayerController SpawnPlayer(int _playerCharacterIndex, Vector3 _playerPos)
     {
@@ -128,6 +126,24 @@ public class ObjectManager
         monsters.Add(controller);
 
         return controller;
+    }
+
+    public void SpawnNPC(int _npcIndex, Vector3 _npcPos)
+    {
+        NPCController controller = Managers.Resource.Instantiate($"NPC_{_npcIndex}").GetOrAddComponent<NPCController>();
+        controller.transform.position = _npcPos;
+
+        switch (_npcIndex)
+        {
+            case 0:
+                controller.Init(new NPCs.TestNPC.Zero());
+                break;
+            case 1:
+                controller.Init(new NPCs.TestNPC.One());
+                break;
+        }
+
+        npcs.Add(controller);
     }
 
     public void ClearPlayer()

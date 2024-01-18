@@ -33,7 +33,7 @@ public class Managers : Singleton<Managers>
     public static GameManager Game { get { return Instance?.game; } }
 
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
+    [RuntimeInitializeOnLoadMethod()]
     public static void CreateManagers()
     {
         Instance.resource = new ResourceManager();

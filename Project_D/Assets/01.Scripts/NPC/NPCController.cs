@@ -7,13 +7,9 @@ public class NPCController : MonoBehaviour
 {
     public NPC npc;
 
-    private void Awake()
+    public void Init(NPC _npc)
     {
-        Init();
-    }
-    public void Init()
-    {
-        npc = new NPCs.TestNPC.One();
+        npc = _npc;
     }
 
     public void Interaction()
