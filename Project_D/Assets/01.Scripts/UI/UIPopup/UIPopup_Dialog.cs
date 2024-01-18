@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -18,6 +19,8 @@ public class UIPopup_Dialog : UIPopup
 
         BindEvent(GetButton((int)Buttons.Button_Next).gameObject, Managers.Dialog.OnClick_NextButton);
         BindEvent(gameObject, OnClick_Skip);
+        StartUI();
+
         return true;
     }
 
@@ -79,6 +82,17 @@ public class UIPopup_Dialog : UIPopup
         GetText((int)Texts.Text_Sentence).text = string.Empty;
     }
 
+    public void StartUI()
+    {
+        Sequence startSequence = DOTween.Sequence();
+        startSequence.Join(GetImage((int)Images.Image_Illust).rectTransform.DOAnchorPosX(GetImage((int)Images.Image_IllustEndPos).rectTransform.anchoredPosition.x, 1f).SetEase(Ease.OutQuad));
+    }
+
+    public void EndUI()
+    {
+
+    }
+
     private enum Texts
     {
         Text_Name, Text_Sentence, Text_Next
@@ -91,6 +105,6 @@ public class UIPopup_Dialog : UIPopup
 
     private enum Images
     {
-        Image_Illust, Image_Panel
+        Image_Illust, Image_Panel, Image_IllustStartPos, Image_IllustEndPos
     }
 }

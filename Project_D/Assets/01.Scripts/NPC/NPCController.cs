@@ -13,7 +13,7 @@ public class NPCController : MonoBehaviour
     }
     public void Init()
     {
-        npc = new NPCs.TestNPC.Two();
+        npc = new NPCs.TestNPC.One();
     }
 
     public void Interaction()
